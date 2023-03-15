@@ -8,6 +8,20 @@ const path = require('path');
 const moment = require('moment');
 
 class adminControllers{
+
+    static adminLogin = async (req,res)=>{
+        const {username,password} = req.body;
+        if(username && password){
+            if(username === "SUPER_ADMIN" && password === "ADMIN@123"){
+                res.send({status : "SUCCESS",message : "Successfully login"})
+            }else{
+                res.send({status : "FAILED",message : "Admin password and user is invalid"})
+            }
+        }else{
+            res.send({status : "FAILED",message : "Admin password and user is invalid"})
+        }
+    }
+
     static registerClient = async (req, res) => {
         const { user, email, phone, address} = req.body;
         const userData = await userModel.findOne({ email: email });
