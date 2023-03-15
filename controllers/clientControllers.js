@@ -20,9 +20,9 @@ class clientControllers {
                         //JWT/
 
                         const token = jwt.sign({ userID: data._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' })
-                        res.send({ status: "Success", message: "Login Success", "Token": token })
+                        res.send({ status: "SUCCESS", message: "Login Success", "Token": token })
                     } else {
-                        res.send({ status: "Failed", message: "email and password are invalid" })
+                        res.send({ status: "FAILED", message: "email and password are invalid" })
                     }
                 } else {
                     res.send('not a register user')
