@@ -11,6 +11,7 @@ router.get("/testClient",(req,res)=>{
 // protected routes
 
 router.post("/deposit",auth_middleware,clientController.depositAmount);
+router.post("/withdraw",auth_middleware,clientController.withdrawAmount);
 router.get("/transaction",auth_middleware,clientController.getTransaction);
 router.get("/checkBalance",auth_middleware,clientController.checkBalance);
 
