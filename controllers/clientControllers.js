@@ -222,7 +222,7 @@ class clientControllers {
 
             let user = await userModel.findOne({'_id':req.id});
             if(!user){
-                res.send("Error User not found");
+                res.send({status:"FAILED",message : "Error User not found"});
             }else{
                 try {
                     let json = user.lastTransaction;
@@ -264,15 +264,15 @@ class clientControllers {
                     console.log(pathToSave)
                     try {
                         await workbook1.xlsx.writeFile(pathToSave)
-                        res.send("Success");
+                        res.send({status:"SUCCESS",message:"Successfully generate"});
                     } catch (error) {
                         console.log(error)
-                        res.send("Error in saving XLSX")
+                        res.send({status:"FAILED",message:"Error in saving XLSX"});
                     }
-
+                    
                 } catch (error) {
                     console.log(error)
-                    res.send("Error in writing Excel")
+                    res.send({status:"FAILED",message:"Error in writing Excel"});
                 }
             }
         } catch (error) {
