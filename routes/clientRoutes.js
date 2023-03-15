@@ -11,6 +11,7 @@ router.get("/testClient",(req,res)=>{
 // protected routes
 
 router.get("/deposit",auth_middleware,clientController.depositAmount);
+router.get("/transaction",auth_middleware,clientController.getTransaction);
 
 
 // public routes
