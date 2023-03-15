@@ -68,7 +68,7 @@ class clientControllers {
             res.send("Errror cannot check balance something went wrong");
         }
     }
-    static depositAmount = async (req,res)=>{
+    static depositAmount = async (req,res)=>{ // active
         
         let {depositeAmount,password} = req.body;
         try {
@@ -91,18 +91,18 @@ class clientControllers {
                             }
                             tempArray.unshift(tranObj);
                             await userModel.updateOne({'_id':req.id},{$set:{lastTransaction : tempArray }})
-                            res.send("Balance Deposite Successfully");
+                            res.send({message : "Balance Deposite Successfully",status:"SUCCESS"});
                         }else{
-                            res.send("Incorrect Password")
+                
+                            res.send({message : "Incorrect Password",status:"FAILED"});
                         }
                     }else{
-                        res.send("Error enter valid Amount")
+                        res.send({message : "Error enter valid Amount",status:"FAILED"});
                     }
                 }else{
-                    res.send("Error Sorry your account is Freez kindly contact Admin")
+                    res.send({message : "Error Sorry your account is Freez kindly contact Admin",status:"FAILED"});
                 }
-                
-            }else res.send("Error Something went wrong")
+            }else res.send({message : "Error Something went wrong",status:"FAILED"}); 
         } catch (error) {
             console.log("ERRROR 01",error)
             res.send("ERROR 404")
