@@ -287,7 +287,7 @@ class clientControllers {
                     resultArray.push(user.lastTransaction[i])
                 }  
             }
-            res.send({message : "SUCCESS",data : resultArray})
+            res.send({status:"SUCCESS",message : "successfully fetch transactions",data : resultArray})
         } catch (error) {
             res.send("Error initia server error")
         }
