@@ -205,16 +205,16 @@ class clientControllers {
             res.send("Error cannot transfer amount");
         }
     }
-    static accountNumber = async (req,res)=>{
+    static accountNumber = async (req,res)=>{ // active
         try {
             let user = await userModel.findOne({'_id':req.id});
             if(user){
-                res.send({account : user.accountNumber})
+                res.send({status:"SUCCESS",account : user.accountNumber})
             }else{
-                res.send("Something went wrong")
+                res.send({status:"FAILED",message:"Something went wrong"});
             }
         } catch (error) {
-            res.send("Error cannot fetch Account Number");
+            res.send({status:"FAILED",message:"Error cannot fetch Account Number"});
         }
     }
     static getExcel = async (req,res)=>{
