@@ -153,7 +153,7 @@ class clientControllers {
             res.send("Error cannot not Deposite Amount");
         }
     }
-    static transferAmount = async (req,res)=>{
+    static transferAmount = async (req,res)=>{ // active
         let {amount,account} = req.body;
         try {
             let currentUser = await userModel.findOne({'_id':req.id});
@@ -187,18 +187,18 @@ class clientControllers {
                                 }
                                 tempArray2.unshift(tranObj2);
                                 await userModel.updateOne({accountNumber : account},{$set:{lastTransaction : tempArray2 }})
-                            res.send("Successfully Transfer ammount");
+                            res.send({message : "Successfully Transfer ammount", status : "SUCCESS"});
                         }else{
-                            res.send("Receiver account not found");
+                            res.send({message : "Receiver account not found", status : "FAILED"});
                         }
                     }else{
-                        res.send("Insufficient funds");
+                        res.send({message : "Insufficient funds", status : "FAILED"});
                     }
                 }else{
-                    res.send("Error Sorry your account is Freez kindly contact Admin")
+                    res.send({message : "Error Sorry your account is Freez kindly contact Admin", status : "FAILED"});
                 }
             }else{
-                res.send("Something went wrong");
+                res.send({message : "Something went wrong", status : "FAILED"});
             }
         } catch (error) {
             console.log(error)
