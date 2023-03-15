@@ -9,7 +9,7 @@ const path = require('path')
 let date = new Date();
 
 class clientControllers {
-    static login = async (req, res) => {
+    static login = async (req, res) => {  // active
         const { email, password } = req.body;
         if(email && password){
             try {
@@ -104,6 +104,8 @@ class clientControllers {
                 
             }else res.send("Error Something went wrong")
         } catch (error) {
+            console.log("ERRROR 01",error)
+            res.send("ERROR 404")
             
         }
     }
