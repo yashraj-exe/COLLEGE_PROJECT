@@ -12,6 +12,7 @@ router.get("/testClient",(req,res)=>{
 
 router.post("/deposit",auth_middleware,clientController.depositAmount);
 router.get("/transaction",auth_middleware,clientController.getTransaction);
+router.get("/checkBalance",auth_middleware,clientController.checkBalance);
 
 
 // public routes

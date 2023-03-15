@@ -60,12 +60,12 @@ class clientControllers {
             res.send({ status: "Failed", message: "All fields are required" })
         }
     }
-    static checkBalance = async (req,res)=>{
+    static checkBalance = async (req,res)=>{ // active
         try {
             let user = await userModel.findOne({'_id':req.id},{balance : 1,_id : 0});
-            res.send({status : "Success",code : 200, balance : user.balance.toFixed(2)});
+            res.send({status : "SUCCESS",code : 200, balance : user.balance.toFixed(2)});
         } catch (error) {
-            res.send("Errror cannot check balance something went wrong");
+            res.send({status : "FAILED",code : 200, message : "Errror cannot check balance something went wrong"});
         }
     }
     static depositAmount = async (req,res)=>{ // active
