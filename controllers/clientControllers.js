@@ -109,7 +109,7 @@ class clientControllers {
             
         }
     }
-    static withdrawAmount = async (req,res)=>{
+    static withdrawAmount = async (req,res)=>{ // active
         let {withdrawAmount,password} = req.body;
         try {
             let user = await userModel.findOne({'_id':req.id});
@@ -133,19 +133,20 @@ class clientControllers {
                                 }
                                 tempArray.unshift(tranObj);
                                 await userModel.updateOne({'_id':req.id},{$set:{lastTransaction : tempArray }})
-                                res.send("Amount withdraw successfully");
+                                res.send({message:"Amount withdraw successfully",status:"SUCCESS"});
                             }else{
-                                res.send("Enter valid ammount");
+                                res.send({message:"Enter valid ammount",status:"FAILED"});
                             }
                         }else{
-                            res.send("Insufficient funds")
+                            res.send({message:"Insufficient funds",status:"FAILED"});
                         }
-                    }else res.send("Password is Incorrect")
+                        
+                    }else res.send({message:"Password is Incorrect",status:"FAILED"});
                 }else{
-                    res.send("Error Sorry your account is Freez kindly contact Admin")
+                    res.send({message:"Sorry your account is Freez kindly contact Admin",status:"FAILED"});
                 }
             }else{
-                res.send("Error Something went wrong")
+                res.send({message:"Error Something went wrong",status:"FAILED"});
             }
         } catch (error) {
             console.log(error)
@@ -278,7 +279,7 @@ class clientControllers {
             res.send("Error cannot Create excel")
         }
     }
-    static getTransaction = async (req,res)=>{
+    static getTransaction = async (req,res)=>{ // active
         try {
             let user = await userModel.findOne({"_id":req.id}).select('lastTransaction -_id');
             let resultArray = [];
