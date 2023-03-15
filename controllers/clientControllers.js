@@ -263,7 +263,8 @@ class clientControllers {
                     let pathToSave = path.join("temp",fileName);
                     console.log("jjjjjjjjjjj",pathToSave)
                     try {
-                        await workbook1.xlsx.writeFile(pathToSave)
+                        let x = await workbook1.xlsx.writeFile()
+                        console.log("qqqqqqqqqqqq",x)
                         // res.download(pathToSave);
                         res.send({status:"SUCCESS",message:"Successfully generate"});
                     } catch (error) {
