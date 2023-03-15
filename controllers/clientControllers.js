@@ -282,10 +282,12 @@ class clientControllers {
         try {
             let user = await userModel.findOne({"_id":req.id}).select('lastTransaction -_id');
             let resultArray = [];
-            for(let i =0 ; i < 10 ; i++){
-                resultArray.push(user.lastTransaction[i])
-            }  
-            res.send({message : "success",data : resultArray})
+            if(user.lastTransaction.length >= 1){
+                for(let i =0 ; i < user.lastTransaction.length ; i++){
+                    resultArray.push(user.lastTransaction[i])
+                }  
+            }
+            res.send({message : "SUCCESS",data : resultArray})
         } catch (error) {
             res.send("Error initia server error")
         }
