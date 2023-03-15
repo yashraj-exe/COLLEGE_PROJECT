@@ -7,5 +7,6 @@ router.get("/testClient",(req,res)=>{
 })
 
 router.post("/login",clientController.login);
+router.get("/checkBalance",clientController.checkBalance)
 
 module.exports = router;

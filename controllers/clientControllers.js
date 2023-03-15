@@ -20,7 +20,8 @@ class clientControllers {
                         //JWT/
 
                         const token = jwt.sign({ userID: data._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' })
-                        res.send({ status: "SUCCESS", message: "Login Success", "Token": token })
+                        // console.log(data.username)
+                        res.send({ status: "SUCCESS", message: "Login Success", "Token": token,name : data.username})
                     } else {
                         res.send({ status: "FAILED", message: "email and password are invalid" })
                     }
