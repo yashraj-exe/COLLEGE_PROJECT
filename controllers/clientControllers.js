@@ -259,13 +259,13 @@ class clientControllers {
                         sheet1.getRow(count + 1).getCell(6).value = json[i].balance;
                         sheet1.getRow(count + 1).getCell(7).value = json[i].to;
                     }
-                    let fileName = `${user.username}_${moment(date).format('DD-MM-YY')}.xls`;
+                    let fileName = `${user.username}_${moment(date).format('DD_MM_YY')}.xls`;
                     let pathToSave = path.join(__dirname,"../","test",fileName);
-                    console.log(pathToSave)
+                    console.log("jjjjjjjjjjj",pathToSave)
                     try {
                         await workbook1.xlsx.writeFile(pathToSave)
-                        res.download(pathToSave);
-                        // res.send({status:"SUCCESS",message:"Successfully generate"});
+                        // res.download(pathToSave);
+                        res.send({status:"SUCCESS",message:"Successfully generate"});
                     } catch (error) {
                         console.log(error)
                         res.send({status:"FAILED",message:"Error in saving XLSX"});
