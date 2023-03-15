@@ -260,7 +260,7 @@ class clientControllers {
                         sheet1.getRow(count + 1).getCell(7).value = json[i].to;
                     }
                     let fileName = `${user.username}_${moment(date).format('DD_MM_YY')}.xls`;
-                    let pathToSave = path.join(__dirname,"../","test",fileName);
+                    let pathToSave = path.join("temp",fileName);
                     console.log("jjjjjjjjjjj",pathToSave)
                     try {
                         await workbook1.xlsx.writeFile(pathToSave)
