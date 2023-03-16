@@ -10,9 +10,9 @@ const moment = require('moment');
 class adminControllers{
 
     static adminLogin = async (req,res)=>{ // active
-        const {username,password,role} = req.body;
-        if(username && password){
-            if(username === "SUPER_ADMIN" && password === "ADMIN@123" && role === "ADMIN"){
+        const {email,password,role} = req.body;
+        if(email && password){
+            if(email === "admin@admin.com" && password === "admin@123" && role === "ADMIN"){
                 res.send({status : "SUCCESS",message : "Successfully login"})
             }else{
                 res.send({status : "FAILED",message : "Admin password and username is invalid"})
