@@ -9,20 +9,19 @@ const moment = require('moment');
 
 class adminControllers{
 
-    static adminLogin = async (req,res)=>{
-        const {username,password} = req.body;
+    static adminLogin = async (req,res)=>{ // active
+        const {username,password,role} = req.body;
         if(username && password){
-            if(username === "SUPER_ADMIN" && password === "ADMIN@123"){
+            if(username === "SUPER_ADMIN" && password === "ADMIN@123" && role === "ADMIN"){
                 res.send({status : "SUCCESS",message : "Successfully login"})
             }else{
-                res.send({status : "FAILED",message : "Admin password and user is invalid"})
+                res.send({status : "FAILED",message : "Admin password and username is invalid"})
             }
         }else{
-            res.send({status : "FAILED",message : "Admin password and user is invalid"})
+            res.send({status : "FAILED",message : "All fields are required"})
         }
     }
-
-    static registerClient = async (req, res) => {
+    static registerClient = async (req, res) => { // active
         const { user, email, phone, address} = req.body;
         const userData = await userModel.findOne({ email: email });
         if (userData) {
@@ -44,7 +43,7 @@ class adminControllers{
                             phone
                         })
                         const saveResponse = await newUser.save()
-                        return res.send({ status: "Success", message: "Client Register Successfully",password})
+                        return res.send({ status: "SUCCESS", message: "Client Register Successfully",password})
 
                     } catch (err) {
                         res.send({ status: "Failed", message: "Unable to register client ", error: err.message })
@@ -58,49 +57,49 @@ class adminControllers{
         }
 
     }
-    static deleteClient = async(req,res)=>{
+    static deleteClient = async(req,res)=>{ // active
         try {
             let accountNumber = req.params.accountNumber;
             const user = await userModel.findOne({accountNumber : accountNumber});
             if(user){
                 let x = await userModel.deleteOne({accountNumber : accountNumber });
                 console.log(x)
-                res.send("Delete success")
+                res.send({message :"Delete success",status : "SUCCESS"})
             }else{
-                res.send({message : "Account number is not valid",status : '404'});
+                res.send({message : "Account number is not valid",status : 'Failed'});
             }
         } catch (error) {
-            res.send("Error in deleting account, something went wrong")
+            res.send({message : "Error in deleting account, something went wrong",status : 'Failed'});
         }
         
     }
-    static freezAccount = async(req,res)=>{
+    static freezAccount = async(req,res)=>{ // active
         let {value,accountNumber} = req.body;
         try {
             let user = await userModel.findOne({accountNumber : accountNumber});
             if(user){
                 await userModel.updateOne({accountNumber : accountNumber},{$set : {isFreez : value}});
-                res.send("Account Freeze successfully")
+                res.send({message : "Account Freeze successfully", status : "SUCCESS"})
             }else{
-                res.send({message : "Account number is not valid",status : '404'});
+                res.send({message : "Account number is not valid",status : 'FAILED'});
             }
         } catch (error) {
-            res.send("Error in Freezeing account, something went wrong")
+            res.send({message : "Error in Freezeing account, something went wrong",status : 'FAILED'});
         }
         
     }
-    static unfreezAccount = async(req,res)=>{
+    static unfreezAccount = async(req,res)=>{ // active
        let {value,accountNumber} = req.body;
         try {
             let user = await userModel.findOne({accountNumber : accountNumber});
             if(user){
                 await userModel.updateOne({accountNumber : accountNumber},{$set : {isFreez : value}});
-                res.send("Account UnFreeze successfully")
+                res.send({message : "Account UnFreeze successfully", status : "SUCCESS"})
             }else{
-                res.send({message : "Account number is not valid",status : '404'});
+                res.send({message : "Account number is not valid",status : 'Failed'});
             }
         } catch (error) {
-            res.send("Error in UnFreezeing account, something went wrong")
+            res.send({message : "Error in UnFreezeing account, something went wrong",status : 'Failed'});
         }
         
     }
