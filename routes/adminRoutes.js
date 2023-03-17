@@ -7,7 +7,7 @@ router.get("/testAdmin",(req,res)=>{
 
 router.post("/register",adminControler.registerClient);
 router.post("/login",adminControler.adminLogin);
-router.delete("/deleteClient/:accountNumber",adminControler.deleteClient)
+router.delete("/delete/:accountNumber",adminControler.deleteClient)
 router.post("/freezaccount",adminControler.freezAccount);
 router.post("/unfreezaccount",adminControler.unfreezAccount);
 router.get("/getAllClients",adminControler.getAllClients);
