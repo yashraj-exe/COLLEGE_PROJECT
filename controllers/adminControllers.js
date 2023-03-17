@@ -75,11 +75,11 @@ class adminControllers{
         
     }
     static freezAccount = async(req,res)=>{ // active
-        let {value,accountNumber} = req.body;
+        let {accountNumber} = req.body;
         try {
             let user = await userModel.findOne({accountNumber : accountNumber});
             if(user){
-                await userModel.updateOne({accountNumber : accountNumber},{$set : {isFreez : value}});
+                await userModel.updateOne({accountNumber : accountNumber},{$set : {isFreez : true}});
                 res.send({message : "Account Freeze successfully", status : "SUCCESS"})
             }else{
                 res.send({message : "Account number is not valid",status : 'FAILED'});
