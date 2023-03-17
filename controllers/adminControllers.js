@@ -13,7 +13,7 @@ class adminControllers{
         const {email,password,role} = req.body;
         if(email && password){
             if(email === "admin@admin.com" && password === "admin@123" && role === "admin"){
-                res.send({status : "SUCCESS",message : "Successfully login"})
+                res.send({status : "SUCCESS",message : "Successfully login",name : "SUPER_ADMIN"})
             }else{
                 res.send({status : "FAILED",message : "Admin password and username is invalid"})
             }
