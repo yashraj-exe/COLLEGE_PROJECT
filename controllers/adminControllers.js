@@ -64,7 +64,6 @@ class adminControllers{
             const user = await userModel.findOne({accountNumber : accountNumber});
             if(user){
                 let x = await userModel.deleteOne({accountNumber : accountNumber });
-                console.log(x)
                 res.send({message :"Delete success",status : "SUCCESS"})
             }else{
                 res.send({message : "Account number is not valid",status : 'Failed'});
@@ -113,7 +112,6 @@ class adminControllers{
         }
 
     }
-
     static crossCheck = async (req,res)=>{
         const accountNumber = req.params.accountNumber;
         let data = await userModel.findOne({accountNumber : accountNumber});
