@@ -10,6 +10,6 @@ router.post("/login",adminControler.adminLogin);
 router.get("/deleteClient/:accountNumber",adminControler.deleteClient)
 router.post("/freezaccount",adminControler.freezAccount);
 router.post("/unfreezaccount",adminControler.unfreezAccount);
-router.get("getAllClients",adminControler.getAllClients);
+router.get("/getAllClients",adminControler.getAllClients);
 
 module.exports = router;
