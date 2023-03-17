@@ -107,9 +107,9 @@ class adminControllers{
     static getAllClients = async (req,res)=>{
         try {
             let allUser = await userModel.find().select('-password -lastTransaction -_id -__v');
-            res.send(allUser)
+            res.send({data :allUser,status : "SUCCESS"})
         } catch (error) {
-            res.send("Error in fetching clients details, something went wrong")
+            res.send({message : "Error in fetching clients details, something went wrong",status : "FAILED"})
         }
 
     }
