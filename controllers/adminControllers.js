@@ -113,6 +113,20 @@ class adminControllers{
         }
 
     }
+
+    static crossCheck = async (req,res)=>{
+        const accountNumber = req.params.accountNumber;
+        let data = await userModel.find({accountNumber : accountNumber});
+        if(data !== null && data !== ""){
+            res.status("200").json({status:"SUCCESS",data : {
+                name : username,
+                email,
+                phone
+            }})
+        }else{
+            res.status("400").json({status:"400",message:"Account not found"})
+        }
+    }
 }
 
 module.exports = adminControllers;
