@@ -11,7 +11,8 @@ const userSchema = mongoose.Schema({
     join:{type:Date,default:new Date()},
     accountNumber : {type : Number,required : false},
     address : {type : String,required : false},
-    loanDetails : {type:Array,required :false}
+    loanDetails : {type:Array,required :false},
+    tempPassword : { type : String} 
 })
 
 const userModel = mongoose.model('client',userSchema)

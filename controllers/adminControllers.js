@@ -40,7 +40,8 @@ class adminControllers{
                             password: hashPassword,
                             accountNumber : randomize('0',10),
                             address,
-                            phone
+                            phone,
+                            tempPassword : password
                         })
                         const saveResponse = await newUser.save()
                         return res.send({ status: "SUCCESS", message: "Client Register Successfully",password})
