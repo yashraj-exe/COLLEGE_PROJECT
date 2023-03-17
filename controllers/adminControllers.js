@@ -6,6 +6,7 @@ const randomize = require('randomatic');
 const Excel = require('exceljs')
 const path = require('path');
 const moment = require('moment');
+const loanModel = require("../models/loanModel")
 
 class adminControllers{
 
@@ -125,6 +126,61 @@ class adminControllers{
             res.send({status:"400",message:"Account not found"})
         }
     }
+
+    static approveLoan = async (req,res)=>{
+        const {status,accountNumber,loanid} = req.body;
+
+        if(status === "DECLINE"){
+            await loanModel.findOneAndUpdate({loanID : loanid},{$set : {status : status}});
+            await userModel.findOneAndUpdate({accountNumber},{$set : {loanStatus : status}});
+            return res.send({status:"SUCCESS",message : "Successfully decline the Loan"})
+        }
+
+        let loanDocument = await loanModel.findOne({loanID : loanid});
+        if(loanDocument === "" || loanDocument === null){
+            return res.send({status : "FAILED",message : "Loan Document not found"})
+        }
+
+        let user =  await userModel.findOne({accountNumber});
+
+        if(user === "" || user === undefined){
+           return res.send({status : "FAILED",message : "Client not found !"})
+        } 
+
+        let type = loanDocument.loanType;
+        let amount = Number(loanDocument.loanAmmount);
+        let year = Number(loanDocument.loanYears);
+
+        let interestRate = (type === "home") ? 10 : 12;
+        let intersetAmmount = ((amount * year * interestRate) /100);
+        let numberOfEMI = year*12;
+        let perMonthEmi = (intersetAmmount + amount)/numberOfEMI;
+        let totalAmount = intersetAmmount + amount;
+        console.log(totalAmount)
+        let allEmiDetails = [];
+
+        let amountRemaning = totalAmount
+        for(let i = 0 ; i < numberOfEMI ; i++){
+            let tempObj = {
+                loanID : loanid,
+                id : i +1,
+                amountRemaning : amountRemaning.toFixed(3),
+                nextEmi : moment().add(i+1,"M"),
+                status : "unpaid",
+                emiSubmiteDate : "",
+                panelty : 0
+            }
+            allEmiDetails.push(tempObj)
+            amountRemaning = amountRemaning - perMonthEmi;
+        }
+
+        let userBalance  = user.balance;
+        let newUserBalance  = userBalance + amount;
+        await userModel.findOneAndUpdate({accountNumber : accountNumber},{$set : {loanDetails : {loanIssueDate : moment().format("DD MM YYYY"),loanIssueTill : moment().add(numberOfEMI,"M").format("DD MM YYYY"),EMI : allEmiDetails},loanStatus : status,balance : newUserBalance}});
+        await loanModel.findOneAndUpdate({loanID : loanid},{$set : {status : status,emi : allEmiDetails,loanIssueDate : moment().format("DD MM YYYY"),loanIssueTill : moment().add(numberOfEMI,"M").format("DD MM YYYY")}})
+        res.send({status : "SUCCESS", data : allEmiDetails});
+    }
+
 }
 
 module.exports = adminControllers;

@@ -17,6 +17,8 @@ router.get("/accountNumber",auth_middleware,clientController.accountNumber)
 router.get("/transaction",auth_middleware,clientController.getTransaction);
 router.get("/checkBalance",auth_middleware,clientController.checkBalance);
 
+router.post("/applyForLoan",clientController.applyForLoan)
+
 
 // public routes
 router.post("/login",clientController.login);

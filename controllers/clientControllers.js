@@ -6,7 +6,7 @@ const randomize = require('randomatic');
 const moment = require('moment')
 const Excel = require('exceljs')
 const path = require('path')
-let date = new Date();
+ const loanModel = require("../models/loanModel")
 
 class clientControllers {
     static login = async (req, res) => {  // active
@@ -230,6 +230,39 @@ class clientControllers {
         } catch (error) {
             res.send("Error initia server error")
         }
+    }
+
+    static applyForLoan = async (req,res)=>{
+        const {type,amount,year,reason,accountNumber} = req.body;
+        let user = await userModel.findOne({accountNumber});
+
+        if(user.loanStatus === "pending" || user.loanStatus === "approved"){
+            return res.send({status : "FAILED",message : "You allready apply for a Loan"});
+        }
+        let loanID = randomize('0',15);
+        if(user !== "" && user !== null){
+            let loanDocument = new loanModel({
+                loanID,
+                accountNumber : accountNumber,
+                username : user.username,
+                email : user.email,
+                phone : user.phone,
+                loanType : type,
+                currentBalance : user.balance,
+                reason,
+                loanAmmount : amount,
+                loanYears : year,
+                status : "pending"
+            })
+            await loanDocument.save();
+            await userModel.findOneAndUpdate({accountNumber},{$set : {loanStatus : "pending"}});
+            res.send({status:"SUCCESS",message : "Successfully apply for a Loan it will take 48hours to approve"});
+
+        }else{
+            res.send("ACCOUNT NOT FOUND")
+        }
+
+
     }
 
 }

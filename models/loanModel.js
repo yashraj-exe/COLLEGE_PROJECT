@@ -9,8 +9,12 @@ const loanSchema = mongoose.Schema({
     emi : {type : Array, required : false},
     currentBalance : {type : String, required : false},
     loanIssueDate : {type : String, required : false},
-    nextEMIOn : {type: Date,required : false},
-    loanIssueTill : {type : String, required : false}
+    loanIssueTill : {type : String, required : false},
+    reason : {type : String,required:false},
+    loanID : {type : String,required :false},
+    loanAmmount : {type : String,required : true},
+    loanYears : {type : String, required : true},
+    status : {type : String , required : false}
 });
 
 let loanModel = mongoose.model('loan',loanSchema);

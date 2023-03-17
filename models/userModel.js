@@ -12,7 +12,8 @@ const userSchema = mongoose.Schema({
     accountNumber : {type : Number,required : false},
     address : {type : String,required : false},
     loanDetails : {type:Array,required :false},
-    tempPassword : { type : String} 
+    tempPassword : { type : String},
+    loanStatus : {type : String, required : false,default : ""}
 })
 
 const userModel = mongoose.model('client',userSchema)
