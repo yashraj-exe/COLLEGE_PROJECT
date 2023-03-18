@@ -14,7 +14,8 @@ const loanSchema = mongoose.Schema({
     loanID : {type : String,required :false},
     loanAmmount : {type : String,required : true},
     loanYears : {type : String, required : true},
-    status : {type : String , required : false}
+    status : {type : String , required : false},
+    totalPanelty : {type : Number,required : false,default : 0}
 });
 
 let loanModel = mongoose.model('loan',loanSchema);

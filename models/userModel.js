@@ -13,7 +13,8 @@ const userSchema = mongoose.Schema({
     address : {type : String,required : false},
     loanDetails : {type:Array,required :false},
     tempPassword : { type : String},
-    loanStatus : {type : String, required : false,default : ""}
+    loanStatus : {type : String, required : false,default : ""},
+    loanID : {type : String,required : false}
 })
 
 const userModel = mongoose.model('client',userSchema)

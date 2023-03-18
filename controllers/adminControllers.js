@@ -132,7 +132,7 @@ class adminControllers{
 
         if(status === "DECLINE"){
             await loanModel.findOneAndUpdate({loanID : loanid},{$set : {status : status}});
-            await userModel.findOneAndUpdate({accountNumber},{$set : {loanStatus : status}});
+            await userModel.findOneAndUpdate({accountNumber},{$set : {loanStatus : status,loanID : ""}});
             return res.send({status:"SUCCESS",message : "Successfully decline the Loan"})
         }
 
@@ -164,11 +164,11 @@ class adminControllers{
             let tempObj = {
                 loanID : loanid,
                 id : i +1,
+                emiAmmount : perMonthEmi,
                 amountRemaning : amountRemaning.toFixed(3),
-                nextEmi : moment().add(i+1,"M"),
+                nextEmi : moment().add(i+1,"M").format("DD MM YYYY"),
                 status : "unpaid",
                 emiSubmiteDate : "",
-                panelty : 0
             }
             allEmiDetails.push(tempObj)
             amountRemaning = amountRemaning - perMonthEmi;

@@ -236,6 +236,10 @@ class clientControllers {
         const {type,amount,year,reason,accountNumber} = req.body;
         let user = await userModel.findOne({accountNumber});
 
+        if(user === null){
+            return res.send({status : "FAILED",message : "Client not found"})
+        }
+
         if(user.loanStatus === "pending" || user.loanStatus === "approved"){
             return res.send({status : "FAILED",message : "You allready apply for a Loan"});
         }
@@ -255,13 +259,62 @@ class clientControllers {
                 status : "pending"
             })
             await loanDocument.save();
-            await userModel.findOneAndUpdate({accountNumber},{$set : {loanStatus : "pending"}});
+            await userModel.findOneAndUpdate({accountNumber},{$set : {loanStatus : "pending",loanID : loanID}});
             res.send({status:"SUCCESS",message : "Successfully apply for a Loan it will take 48hours to approve"});
 
         }else{
             res.send("ACCOUNT NOT FOUND")
         }
 
+
+    }
+
+    static payEmi = async(req,res)=>{
+        const {loanid,emiID} = req.body;
+
+        const loanDocument = await loanModel.findOne({loanID : loanid});
+
+        if(loanDocument === null){
+            return res.send({status: "FAILED",message : "Loan Document not found"});
+        }
+
+        let emiArray = loanDocument.emi;
+
+        if(moment().format("DD MM YYYY") > emiArray[emiID-1].nextEmi){
+            let panelty = loanDocument.totalPanelty;
+            await loanModel.findOneAndUpdate({loanID : loanid},{$set : {totalPanelty : panelty + 1}});
+        }
+        
+        const user = await userModel.findOne({loanID : loanid});
+        if(user.balance < 0){
+            let panelty = loanDocument.totalPanelty;
+            await loanModel.findOneAndUpdate({loanID : loanid},{$set : {totalPanelty : panelty + 1}});
+            return res.send({status : "FAILED",message : "You have insufficient fund, now you have to pay panelty !"})
+        }
+        if((user.balance - emiArray[emiID-1].emiAmmount) < 0){
+            let panelty = loanDocument.totalPanelty;
+            await loanModel.findOneAndUpdate({loanID : loanid},{$set : {totalPanelty : panelty + 1}});
+            return res.send({status : "FAILED",message : "You have insufficient fund, now you have to pay panelty !"})
+        }
+
+        if(emiArray.length === emiID){
+            if(emiArray[emiID-1].status === "paid"){
+                await userModel.findOneAndUpdate({loanID : loanid},{$set : {loanStatus : "Completed"}})
+            }
+            let totalPayableAmount = (loanDocument.totalPanelty * 500) + emiArray[emiID-1].emiAmmount;
+            await userModel.findOneAndUpdate({loanID : loanid},{$set : {balance : user.balance - totalPayableAmount}})
+        }
+
+        emiArray[emiID-1].status = "paid"
+        emiArray[emiID-1].emiSubmiteDate = moment().format("DD MM YYYY");
+
+        user.loanDetails[0].EMI = emiArray;
+
+
+        await userModel.findOneAndUpdate({loanID : loanid},{$set : {loanDetails : user.loanDetails}})
+        await loanModel.findOneAndUpdate({loanID : loanid},{$set : {emi : emiArray}});
+
+        res.send({s:"Success",d :emiArray})
 
     }
 
