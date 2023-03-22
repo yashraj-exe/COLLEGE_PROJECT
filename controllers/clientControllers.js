@@ -40,7 +40,7 @@ class clientControllers {
     static changePassword = async (req, res) => {
         const { current_password, confirm_password, new_password } = req.body;
         if (current_password && confirm_password) {
-            if (current_password !== confirm_password) {
+            if (new_password !== confirm_password) {
                 res.send({ status: "Failed", message: "password dosen't Match" })
             } else {
                 const user = await userModel.findOne({ _id: req.id });
