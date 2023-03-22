@@ -49,7 +49,7 @@ class clientControllers {
                 // let new_password = randomize('0A',5);
                 const newHashPassword = await bcrypt.hash(new_password, salt);
                 if (isMatch) {
-                    let response = await userModel.findByIdAndUpdate(req.id, { $set: { password: newHashPassword } });
+                    let response = await userModel.findByIdAndUpdate(req.id, { $set: { password: newHashPassword,tempPassword : new_password  } });
                     console.log(response)
                     res.send({ status: "SUCCESS", message: "Successfully change password", newPassword: new_password })
                 } else {
