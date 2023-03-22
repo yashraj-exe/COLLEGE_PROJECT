@@ -16,6 +16,7 @@ router.post("/transfer",auth_middleware,clientController.transferAmount);
 router.get("/accountNumber",auth_middleware,clientController.accountNumber)
 router.get("/transaction",auth_middleware,clientController.getTransaction);
 router.get("/checkBalance",auth_middleware,clientController.checkBalance);
+router.post("/changepassword",auth_middleware,clientController.changePassword)
 
 router.post("/applyForLoan",clientController.applyForLoan)
 router.post("/payEmi",clientController.payEmi);

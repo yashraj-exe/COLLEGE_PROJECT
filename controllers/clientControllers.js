@@ -51,7 +51,7 @@ class clientControllers {
                 if (isMatch) {
                     let response = await userModel.findByIdAndUpdate(req.id, { $set: { password: newHashPassword } });
                     console.log(response)
-                    res.send({ status: "Success", message: "Successfully change password", newPassword: new_password })
+                    res.send({ status: "SUCCESS", message: "Successfully change password", newPassword: new_password })
                 } else {
                     res.send({ status: "Failed", message: "password password is incorrect" })
                 }
