@@ -184,7 +184,7 @@ class adminControllers{
     static getAllLoanDeatails = async (req,res)=>{
         try {
             let loanDetails = await loanModel.find();
-            res.send({status:"SUCCESS",message:"Successfully fetch Data"})
+            res.send({status:"SUCCESS",message:"Successfully fetch Data",data : loanDetails})
         } catch (error) {
             res.send({status:"FAILED",message:"Unable to fetch loan details"})
         }   
