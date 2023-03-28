@@ -13,6 +13,8 @@ router.post("/unfreezaccount",adminControler.unfreezAccount);
 router.get("/getAllClients",adminControler.getAllClients);
 router.get("/crossCheck/:accountNumber",adminControler.crossCheck)
 
+router.get("/getLoanDetails",adminControler.getAllLoanDeatails)
+
 router.post("/approveLoan",adminControler.approveLoan)
 
 module.exports = router;
