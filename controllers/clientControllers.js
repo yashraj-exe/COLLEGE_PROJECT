@@ -303,7 +303,7 @@ class clientControllers {
         }
 
         emiArray[emiID - 1].status = "paid"
-        emiArray[emiID - 1].emiSubmiteDate = moment().format("DD MM YYYY");
+        emiArray[emiID - 1].emiSubmiteDate = moment().format("DD/MM/YYYY");
 
         user.loanDetails[0].EMI = emiArray;
 
