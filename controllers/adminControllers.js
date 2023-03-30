@@ -134,6 +134,8 @@ class adminControllers{
             await loanModel.findOneAndUpdate({loanID : loanid},{$set : {status : status}});
             await userModel.findOneAndUpdate({accountNumber},{$set : {loanStatus : status,loanID : ""}});
             return res.send({status:"SUCCESS",message : "Successfully decline the Loan"})
+        }else if(status === "approved"){
+            return res.send({status:"FAILED",message : "Loan already approved"})
         }
 
         let loanDocument = await loanModel.findOne({loanID : loanid});
@@ -164,7 +166,7 @@ class adminControllers{
             let tempObj = {
                 loanID : loanid,
                 id : i +1,
-                emiAmmount : perMonthEmi,
+                emiAmmount : Number(perMonthEmi).toFixed(3),
                 amountRemaning : amountRemaning.toFixed(3),
                 nextEmi : moment().add(i+1,"M").format("DD MM YYYY"),
                 status : "unpaid",
