@@ -195,6 +195,17 @@ class adminControllers{
             res.send({status:"FAILED",message:"Unable to fetch loan details"})
         }   
     }
+
+    static getALLClients = async (req,res)=>{
+        try {
+            let loanDetails = await loanModel.find();
+            if(loanDetails !== undefined && loanDetails !== "" && loanDetails !== []){
+                res.send({status : "SUCCESS",message: "Successfully fetch data"});
+            }
+        } catch (error) {
+            res.send({status:"FAILLED",message: "Unable to fetch data"});
+        }
+    }
 }
 
 module.exports = adminControllers;
