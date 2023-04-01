@@ -130,7 +130,7 @@ class adminControllers{
     static approveLoan = async (req,res)=>{
         const {status,accountNumber,loanid} = req.body;
 
-        if(status === "DECLINE"){
+        if(status === "decline"){
             await loanModel.findOneAndUpdate({loanID : loanid},{$set : {status : status}});
             await userModel.findOneAndUpdate({accountNumber},{$set : {loanStatus : status,loanID : ""}});
             return res.send({status:"SUCCESS",message : "Successfully decline the Loan"})
