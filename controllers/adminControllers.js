@@ -178,7 +178,7 @@ class adminControllers{
         let newUserBalance  = userBalance + amount;
         await userModel.findOneAndUpdate({accountNumber : accountNumber},{$set : {loanDetails : {loanIssueDate : moment().format("DD MM YYYY"),loanIssueTill : moment().add(numberOfEMI,"M").format("DD MM YYYY"),EMI : allEmiDetails},loanStatus : status,balance : newUserBalance}});
         await loanModel.findOneAndUpdate({loanID : loanid},{$set : {status : status,emi : allEmiDetails,loanIssueDate : moment().format("DD MM YYYY"),loanIssueTill : moment().add(numberOfEMI,"M").format("DD MM YYYY")}})
-        res.send({status : "SUCCESS", data : allEmiDetails});
+        res.send({status : "SUCCESS",message : "Successfully approved loan", data : allEmiDetails});
     }
 
     static getAllLoanDeatails = async (req,res)=>{
