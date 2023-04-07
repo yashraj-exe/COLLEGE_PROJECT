@@ -134,8 +134,6 @@ class adminControllers{
             await loanModel.findOneAndUpdate({loanID : loanid},{$set : {status : status}});
             await userModel.findOneAndUpdate({accountNumber},{$set : {loanStatus : status,loanID : ""}});
             return res.send({status:"SUCCESS",message : "Successfully decline the Loan"})
-        }else if(status === "approved"){
-            return res.send({status:"FAILED",message : "Loan already approved"})
         }
 
         let loanDocument = await loanModel.findOne({loanID : loanid});
