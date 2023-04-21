@@ -335,7 +335,7 @@ class clientControllers {
         try {
             const {accountNumber} = req.body;
             let user = await userModel.findOne({accountNumber : accountNumber}).select("-password -tempPassword");
-            res.send({status:"SUCCESS",message : "Successfully fetch data"});
+            res.send({status:"SUCCESS",message : "Successfully fetch data",data : user});
 
         } catch (error) {
             res.send({status : "FAILED",message:"Initial server error"});
