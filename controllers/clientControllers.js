@@ -334,7 +334,7 @@ class clientControllers {
     static getUserDetails = async (req,res)=>{
         try {
             const {accountNumber} = req.body;
-            let user = await userModel.findOne({accountNumber : accountNumber}).select("-password -tempPassword");
+            let user = await loanModel.findOne({accountNumber : accountNumber}).select("-password -tempPassword");
             res.send({status:"SUCCESS",message : "Successfully fetch data",data : user});
 
         } catch (error) {
