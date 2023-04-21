@@ -18,7 +18,8 @@ router.get("/transaction",auth_middleware,clientController.getTransaction);
 router.get("/checkBalance",auth_middleware,clientController.checkBalance);
 router.post("/changepassword",auth_middleware,clientController.changePassword)
 
-router.post("/applyForLoan",clientController.applyForLoan)
+router.post("/applyForLoan",clientController.applyForLoan);
+router.post("/getUserDetails",clientController.getUserDetails)
 router.post("/payEmi",clientController.payEmi);
 
 

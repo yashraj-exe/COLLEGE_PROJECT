@@ -331,6 +331,17 @@ class clientControllers {
 
     }
 
+    static getUserDetails = async (req,res)=>{
+        try {
+            const {accountNumber} = req.body;
+            let user = await userModel.findOne({accountNumber : accountNumber}).select("-password -tempPassword");
+            res.send({status:"SUCCESS",message : "Successfully fetch data"});
+
+        } catch (error) {
+            res.send({status : "FAILED",message:"Initial server error"});
+        }
+    }
+
 }
 
 
