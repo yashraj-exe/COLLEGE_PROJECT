@@ -132,8 +132,7 @@ class adminControllers {
     static approveLoan = async (req, res) => {
         const { status, accountNumber, loanid } = req.body;
 
-        let loanStatus = loanModel.findOne({ loanID: loanid });
-
+        let loanStatus = await loanModel.findOne({ loanID: loanid });
         if (loanStatus.status === "pending") {
             if (status === "decline") {
                 await loanModel.findOneAndUpdate({ loanID: loanid }, { $set: { status: status } });
