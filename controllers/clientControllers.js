@@ -321,7 +321,7 @@ class clientControllers {
         const kolkataTime = moment().tz('Asia/Kolkata');
         let tranObj = {
             type: "PAY-EMI",
-            date: kolkataTime.format('YYYY-MM-DD HH:mm:ss'),
+            date: kolkataTime.format('YYYY-MM-DD HH:mm:ss a'),
             debit: emiArray[emiID-1].emiAmmount,
             credit: 0,
             balance: user.balance - emiArray[emiID-1].emiAmmount,
