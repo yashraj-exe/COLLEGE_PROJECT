@@ -7,6 +7,7 @@ const moment = require('moment')
 const Excel = require('exceljs')
 const path = require('path')
 const loanModel = require("../models/loanModel")
+const moment = require('moment-timezone');
 
 class clientControllers {
     static login = async (req, res) => {  // active
@@ -317,9 +318,10 @@ class clientControllers {
         await userModel.findOneAndUpdate({ loanID: loanid }, { $set: { loanDetails: user.loanDetails,balance : user.balance - emiArray[emiID-1].emiAmmount} })
         await loanModel.findOneAndUpdate({ loanID: loanid }, { $set: { emi: emiArray } });
         let tempArray = user.lastTransaction;
+        const kolkataTime = moment().tz('Asia/Kolkata');
         let tranObj = {
             type: "PAY-EMI",
-            date: moment(new Date()).format("MMMM Do YYYY, h:mm:ss a"),
+            date: kolkataTime.format('YYYY-MM-DD HH:mm:ss'),
             debit: emiArray[emiID-1].emiAmmount,
             credit: 0,
             balance: user.balance - emiArray[emiID-1].emiAmmount,
